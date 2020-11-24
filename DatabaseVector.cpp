@@ -10,6 +10,7 @@ void Read_Database() {
 	fstream file;
 
 	//open existing file
+	//just note the name of the file has to be database
 	file.open("Database.csv", ios::in);
 
 	//read data from file
