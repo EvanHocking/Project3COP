@@ -57,6 +57,25 @@ void makeHeap(int size, vector<vector<string>> list, int* theHeap, vector<vector
 //then heap2[0] will have all the things in aisle 3
 //now we need heapify the heap and heap2 to create min heap
 //and thus optimized route from start to finish of store
-void heapify(int* theHeap, vector<vector<string>>* theHeap2[], int n, int size) {
+void heapify(int* theHeap, vector<vector<string>>* theHeap2, int n, int size) {
+	int largest = size;
+	int l = 2 * size + 1;
+	int r = 2 * size + 2;
 
+	if (l < n && theHeap[l] > theHeap[largest]) {
+		largest = l;
+	}
+	if (r < n && theHeap[r] > theHeap[largest]) {
+		largest = r;
+	}
+	if (largest != size) {
+		int temp = theHeap[size];
+		vector<vector<string>> tempVec = theHeap2[size];
+		theHeap[size] = theHeap[largest];
+		theHeap2[size] = theHeap2[largest];
+		theHeap[largest] = temp;
+		theHeap2[largest] = tempVec;
+
+		heapify(theHeap, theHeap2, n, largest);
+	}
 }
