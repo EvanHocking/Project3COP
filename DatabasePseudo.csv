@@ -1,0 +1,36 @@
+brancdName,category,description,aisle
+publix,fruit,banana,1
+motts,juice,apple juice,1
+tropicana,juice,orange juice,1
+publix,vegetable,carrot,1
+the big green,vegetable,lettuce,1
+fishy,meat,salmon,2
+pig,meat,pork chop,2
+pig,meat,bacon,2
+cow,meat,steak,2
+assorted,meat,sausages,2
+bread,grain,white bread,3
+bread,grain,peta bread,3
+kelloggs,cereal,raisin bran,3
+genreal mills,cereal,cinnamon toast crunch,3
+baker,oats,oatmeal,3
+goya,international,beans,4
+Pace,international,salsa,4
+red bottle,international,sriacha,4
+tostitos,international,salsa,4
+newman's own,international,salsa,4
+perdue,frozen,chicken tenders,5
+totino's,frozen,pizza rolls,5
+digiorno,frozen,pizza ,5
+great value,frozen,mangoes,5
+birds eye,frozen,broccoli,5
+breyers,dessert,ice cream,6
+blue bell,dessert,fudge bars,6
+magnum,dessert,ice cream bars,6
+great value,dessert,ice cream sandmiches,6
+carvel,dessert,ice cream cake,6
+Pepsi Product,drinks,mountain dew,7
+UF sponsored,drinks,gatorade,7
+arizona,drinks,iced tea,7
+A&W,drinks,root beer,7
+Monster,drinks,energy drink,7
