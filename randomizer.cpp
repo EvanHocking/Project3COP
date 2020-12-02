@@ -9,13 +9,17 @@ vector<vector<string>> randomizeList(vector<vector<string>>& _dataBase, int _lis
 	vector<vector<string>> list;
 
 	//Set the seed if needed
-	if(_isSeeded)		{ srand(_seed); }
-	else				{ srand((unsigned)time(0)); }
+	if(_isSeeded)		
+		srand(_seed); 
+	else				
+		srand((unsigned)time(0)); 
 
 	for (int i = 0; i < _listSize; i++)
 	{
-		int randomNumber = rand() % _dataBase.size();		//generates a random number with a upperlimit of the size of the data base
-		list.push_back(_dataBase.at(randomNumber));			//using the random number, index list and add it to randomized list
+		//generates a random number with a upperlimit of the size of the data base
+		//using the random number, index list and add it to randomized list
+		int randomNumber = rand() % _dataBase.size();		
+		list.push_back(_dataBase.at(randomNumber));			
 	}
 
 	return list;
