@@ -9,8 +9,8 @@ vector<vector<string>> randomizeList(vector<vector<string>>& _dataBase, int _lis
 	vector<vector<string>> list;
 
 	//Set the seed if needed
-	if (_isSeeded) { srand(_seed); }
-	else { srand((unsigned)time(0)); }
+	if(_isSeeded)		{ srand(_seed); }
+	else				{ srand((unsigned)time(0)); }
 
 	for (int i = 0; i < _listSize; i++)
 	{
@@ -19,12 +19,4 @@ vector<vector<string>> randomizeList(vector<vector<string>>& _dataBase, int _lis
 	}
 
 	return list;
-}
-
-int main()
-{
-	vector<vector<string>> test = Read_Database();
-	vector<vector<string>> randomizedList = randomizeList(test, 3, true, 1);
-
-	return 0;
 }
