@@ -5,26 +5,26 @@
 #include <string>
 using namespace std;
 
-void Read_Database() {
+vector<vector<string>> Read_Database() {
 	//File pointer
 	fstream file;
 
 	//open existing file
 	//just note the name of the file has to be database
-	file.open("Database.csv", ios::in);
+	file.open("DatabasePseudo.csv", ios::in);
 
 	//read data from file
 	//store it in a vector of vectors
 	vector<vector<string>> storage;
 	vector<string> row;
+
 	string line, word, temp;
 
-	while (file >> temp) {
+	while (getline(file, temp, '\n')) {
 
 		row.clear();
 		//read a row
-		getline(file, line);
-		stringstream s(line);
+		stringstream s(temp);
 		//read column data and store in word
 		while (getline(s, word, ',')) {
 			row.push_back(word);
@@ -32,4 +32,7 @@ void Read_Database() {
 		storage.push_back(row);
 
 	}
+
+	//cout << "WE DID THE STORE" << endl;
+	return storage;
 }

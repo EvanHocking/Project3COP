@@ -5,13 +5,47 @@
 //so given a vector of vectors is the list of items and each vector
 //contains all five pieces of data, we sort the list based on the aisle number
 //so create nodes that have all three pieces of data we need
-//ie B, D and E
+//ie A, C and D
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <array>
 #include <string> 
 using namespace std;
+
+//the function to read the database
+vector<vector<string>> Read_Database() {
+	//File pointer
+	fstream file;
+
+	//open existing file
+	//just note the name of the file has to be database
+	file.open("DatabasePseudo.csv", ios::in);
+
+	//read data from file
+	//store it in a vector of vectors
+	vector<vector<string>> storage;
+	vector<string> row;
+	string line, word, temp;
+
+	while (file >> temp) {
+
+		row.clear();
+		//read a row
+		getline(file, line);
+		stringstream s(line);
+		//read column data and store in word
+		while (getline(s, word, ',')) {
+			row.push_back(word);
+		}
+		storage.push_back(row);
+
+	}
+	return storage;
+}
+
 
 //so the original list is stored in vector<vector<string>>
 //and there are 15 aisles
@@ -21,13 +55,14 @@ using namespace std;
 int theHeap[];
 //a pointer to the array for the corresponding heap which has the data
 vector<vector<string>> theHeap2[];
+
 void makeHeap(int size, vector<vector<string>> list, int* theHeap, vector<vector<string>>* theHeap2) {
 	for (int i = 0; i < size; i++) {
-		int input = stoi(vector[i][4]);//which will change the aisle data string to number
+		int input = stoi(vector[i][3]);//which will change the aisle data string to number
 		//making the vector of data from the list
 		vector<string> temp;
-		temp.push_back(list[i][1]); //the brand name
-		temp.push_back(list[i][3]); //the food item
+		temp.push_back(list[i][0]); //the brand name
+		temp.push_back(list[i][2]); //the food item
 		if (theHeap[].size() > 0) { //if arr is nonempty we have to see if input is already in the array
 			for (int j = 0; j < theHeap[].size(); j++) {
 				if (theHeap[j] == input) {
@@ -68,6 +103,7 @@ void heapify(int* theHeap, vector<vector<string>>* theHeap2, int n, int size) {
 	if (r < n && theHeap[r] > theHeap[largest]) {
 		largest = r;
 	}
+
 	if (largest != size) {
 		int temp = theHeap[size];
 		vector<vector<string>> tempVec = theHeap2[size];
@@ -78,4 +114,22 @@ void heapify(int* theHeap, vector<vector<string>>* theHeap2, int n, int size) {
 
 		heapify(theHeap, theHeap2, n, largest);
 	}
+}
+
+void printHeap(int* theHeap, vector<vector<string>>* theHeap2) {
+	for (int i = 0; i < theHeap.size(); i++) {
+		cout << "==========	AISLE " << theHeap[i] << "	==========" << endl;
+		for (int j = 0; j < theHeap2[i].size(); j++) {
+			cout << theHeap2[i][j][0] << "	|	" << theHeap2[i][j][2] << endl;
+		}
+	}
+}
+
+
+int main() {
+	vector<vector<string>> list = Read_Database();
+	makeHeap(list.size(), list, theHeap, theHeap2);
+	heapify(theHeap, theHeap2, theHeap.size(), theHeap.size());
+	printHeap(theHeap, theHeap2);
+	return 0;
 }
