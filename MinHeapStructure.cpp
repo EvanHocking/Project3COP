@@ -22,7 +22,7 @@ vector<vector<string>> Read_Database() {
 
 	//open existing file
 	//just note the name of the file has to be database
-	file.open("Database.csv", ios::in);
+	file.open("DatabasePseudo.csv", ios::in);
 
 	//read data from file
 	//store it in a vector of vectors
@@ -44,7 +44,7 @@ vector<vector<string>> Read_Database() {
 
 	}
 
-	cout << "WE DID THE STORE" << endl;
+	//cout << "WE DID THE STORE" << endl;
 	return storage;
 }
 
@@ -97,7 +97,7 @@ void makeHeap(int size, vector<vector<string>> list, vector<int>& theHeap, vecto
 			temp.clear();
 		}
 	}
-	cout << "WE MADE THE MIN HEAP" << endl;
+	//cout << "WE MADE THE MIN HEAP" << endl;
 }
 
 //now we have an array of the aisle numbers and an array
@@ -106,33 +106,27 @@ void makeHeap(int size, vector<vector<string>> list, vector<int>& theHeap, vecto
 //then heap2[0] will have all the things in aisle 3
 //now we need heapify the heap and heap2 to create min heap
 //and thus optimized route from start to finish of store
-void heapify(vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2, int n, int size) {
-	int largest = size;
-	int l = 2 * size + 1;
-	int r = 2 * size + 2;
-
-	if (l < n && theHeap[l] > theHeap[largest]) {
-		largest = l;
+void heapify(vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2) {
+	int first;
+	for (int i = 0; i < theHeap.size(); i++) {
+		first = i;
+		for (int j = i + 1; j < theHeap.size(); j++) {
+			if (theHeap[first] < theHeap[j]) {
+				first = j;
+			}
+		}
+		int temp = theHeap[first];
+		vector<vector<string>> tempVec = theHeap2[first];
+		theHeap[first] = theHeap[i];
+		theHeap2[first] = theHeap2[i];
+		theHeap[i] = temp;
+		theHeap2[i] = tempVec;
 	}
-	if (r < n && theHeap[r] > theHeap[largest]) {
-		largest = r;
-	}
-
-	if (largest != size) {
-		int temp = theHeap[size];
-		vector<vector<string>> tempVec = theHeap2[size];
-		theHeap[size] = theHeap[largest];
-		theHeap2[size] = theHeap2[largest];
-		theHeap[largest] = temp;
-		theHeap2[largest] = tempVec;
-
-		heapify(theHeap, theHeap2, n, largest);
-	}
-	cout << "WE DID THE HEAPIFY" << endl;
+	//cout << "WE DID THE HEAPIFY" << endl;
 }
 
 void printHeap(vector<int> theHeap, vector<vector<vector<string>>> theHeap2) {
-	for (int i = 0; i < theHeap.size(); i++) {
+	for (int i = theHeap.size() - 1; i >= 0; i--) {
 		cout << "========== AISLE " << theHeap[i] << " ==========" << endl;
 		for (int j = 0; j < theHeap2[i].size(); j++) {
 			cout << theHeap2[i][j][0] << " | " << theHeap2[i][j][1] << endl;
@@ -150,27 +144,26 @@ int main() {
 
 	vector<vector<string>> list = Read_Database();
 	//to test the storing of the list
-	for (int i = 0; i < list.size(); i++) {
-		for (int j = 0; j < list[i].size(); j++) {
+	/*for (int i = 0; i < list.size(); i++) {
+		for (int j = i + 1; j < list[i].size(); j++) {
 			cout << list[i][j] << " ";
 		}
 		cout << endl;
-	}
+	}*/
 
-	//makeHeap(list.size(), list, theHeap, theHeap2);
+	makeHeap(list.size(), list, theHeap, theHeap2);
 
 	//to test the makeheap function
-	for (int i = 0; i < theHeap.size(); i++) {
+	/*for (int i = 0; i < theHeap.size(); i++) {
 		for (int j = 0; j < theHeap2[i].size(); j++) {
 			for (int k = 0; k < theHeap2[i][j].size(); k++) {
 				cout << theHeap2[i][j][k] << " ";
 			}
 		}
 		cout << endl;
-	}
+	}*/
 
-
-	//heapify(theHeap, theHeap2, theHeap.size(), theHeap.size());
-	//printHeap(theHeap, theHeap2);
+	heapify(theHeap, theHeap2);
+	printHeap(theHeap, theHeap2);
 	return 0;
 }
