@@ -15,8 +15,20 @@
 #include <string> 
 using namespace std;
 
+class MinHeap {
+private: 
+	//a vector storing the heap
+	vector<int> theHeap;
+	//a vector storing corresponding heap which has the data
+	vector<vector<vector<string>>> theHeap2;
+public:
+	void makeHeap(int size, vector<vector<string>> list, vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2);
+	void heapify(vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2);
+	void printHeap(vector<int> theHeap, vector<vector<vector<string>>> theHeap2);
+};
+
 //the function to read the database
-vector<vector<string>> Read_Database() {
+/*vector<vector<string>> Read_Database() {
 	//File pointer
 	fstream file;
 
@@ -46,14 +58,14 @@ vector<vector<string>> Read_Database() {
 
 	//cout << "WE DID THE STORE" << endl;
 	return storage;
-}
+}*/
 
 //so the original list is stored in vector<vector<string>>
 //and there are 15 aisles
 //we know the amount of items in the list -> size
 //this function take in a vector<vector<string>> which is the generagted list
 
-void makeHeap(int size, vector<vector<string>> list, vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2) {
+void MinHeap::makeHeap(int size, vector<vector<string>> list, vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2) {
 	for (int i = 1; i < size; i++) {
 		int input = stoi(list[i][3]);//which will change the aisle data string to number
 		//making the vector of data from the list
@@ -106,7 +118,7 @@ void makeHeap(int size, vector<vector<string>> list, vector<int>& theHeap, vecto
 //then heap2[0] will have all the things in aisle 3
 //now we need heapify the heap and heap2 to create min heap
 //and thus optimized route from start to finish of store
-void heapify(vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2) {
+void MinHeap::heapify(vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2) {
 	int first;
 	for (int i = 0; i < theHeap.size(); i++) {
 		first = i;
@@ -125,7 +137,7 @@ void heapify(vector<int>& theHeap, vector<vector<vector<string>>>& theHeap2) {
 	//cout << "WE DID THE HEAPIFY" << endl;
 }
 
-void printHeap(vector<int> theHeap, vector<vector<vector<string>>> theHeap2) {
+void MinHeap::printHeap(vector<int> theHeap, vector<vector<vector<string>>> theHeap2) {
 	for (int i = theHeap.size() - 1; i >= 0; i--) {
 		cout << "========== AISLE " << theHeap[i] << " ==========" << endl;
 		for (int j = 0; j < theHeap2[i].size(); j++) {
@@ -137,10 +149,7 @@ void printHeap(vector<int> theHeap, vector<vector<vector<string>>> theHeap2) {
 
 
 int main() {
-	//a vector storing the heap
-	vector<int> theHeap;
-	//a vector storing corresponding heap which has the data
-	vector<vector<vector<string>>> theHeap2;
+	
 
 	vector<vector<string>> list = Read_Database();
 	//to test the storing of the list
