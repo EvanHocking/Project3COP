@@ -22,3 +22,8 @@ void GroceryMap::organizeList()
         }
     }
 }
+
+void GroceryMap::clear()
+{
+    grocery.clear();
+}

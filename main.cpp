@@ -19,16 +19,15 @@ TODO: make a description of the program
 #include <random>
 #include "DataBase.h"
 #include "GroceryMap.h"
-
-#undef RAND_MAX 
-#define RAND_MAX 400,000
-
+#include "MinHeap.h"
 
 using namespace std;
 
 void clearScreen();
 void displayList(vector<vector<string>> _randomList);
 vector<vector<string>> randomizeList(vector<vector<string>>& _dataBase, int _listSize, bool _isSeeded, unsigned int _seed);
+vector<vector<string>> Read_Database(string _fileName);
+void saveList(string _fileName, vector<vector<string>> _list);
 
 int main()
 {
@@ -42,7 +41,9 @@ int main()
 	//Objects
 	DataBase data;
 	GroceryMap map;
+	MinHeap heap;
 	vector<vector<string>> randomList;
+	string fileName;
 
 	data.Read_Database("newDatabase.csv");
 	randomList = randomizeList(data.getData(), 10, isSeeded, seed);
@@ -81,16 +82,31 @@ int main()
 				break;
 			case 3:
 				//Save to txt
+				cout << "Please enter a list name to save: ";
+				cin >> fileName;
+				saveList(fileName, randomList);
+				break;
 			case 4:
 				//Load from txt
+				cout << "Please enter a list name to load: ";
+				cin >> fileName;
+				randomList = Read_Database(fileName + ".txt");
+				cout << "Completed: Loaded list from file" << endl;
+				break;
 			case 5:
 				//Map Org.
+				map.clear();
 				for (int i = 0; i < randomList.size(); i++)
 					map.addEdge(stoi(randomList.at(i).at(3)), randomList.at(i).at(2), randomList.at(i).at(1), randomList.at(i).at(0));
 				map.organizeList();
 				break;
 			case 6:
 				//Heap Org.
+				cout << "Optimized List: MINHEAP" << endl;
+				heap.makeHeap(randomList.size(), randomList, heap.theHeap, heap.theHeap2);
+				heap.heapify(heap.theHeap, heap.theHeap2);
+				heap.printHeap(heap.theHeap, heap.theHeap2);
+				break;
 			case 7:
 				cout << "Enter an unsigned integer, or a -1 to not use a seed." << endl
 					<< "Seed: ";
@@ -120,9 +136,9 @@ vector<vector<string>> randomizeList(vector<vector<string>>& _dataBase, int _lis
 
 	//Set the seed if needed
 	if (_isSeeded)
-		srand(_seed);
+		generator.seed(_seed);
 	else
-		srand((unsigned)time(0));
+		generator.seed((unsigned)time(0));
 
 	for (int i = 0; i < _listSize; i++)
 	{
@@ -138,6 +154,50 @@ vector<vector<string>> randomizeList(vector<vector<string>>& _dataBase, int _lis
 	}
 
 	return list;
+}
+void saveList(string _fileName, vector<vector<string>> list)
+{
+	ofstream dataStream (_fileName + ".txt");
+	for (int i = 0; i < list.size(); i++)
+	{
+		dataStream << list.at(i).at(0) << '\t'
+			<< list.at(i).at(1) << '\t'
+			<< list.at(i).at(2) << '\t'
+			<< list.at(i).at(3) << '\t' << '\n';
+	}
+	dataStream.close();
+}
+vector<vector<string>> Read_Database(string _fileName)
+{
+	//File pointer
+	fstream file;
+	vector<vector<string>> storage;
+
+	//open existing file
+	//just note the name of the file has to be database
+	file.open(_fileName, ios::in);
+
+	//read data from file
+	//store it in a vector of vectors
+	vector<string> row;
+
+	string line, word, temp;
+
+	while (getline(file, temp, '\n')) {
+
+		row.clear();
+		//read a row
+		stringstream s(temp);
+		//read column data and store in word
+		while (getline(s, word, '\t')) {
+			row.push_back(word);
+		}
+		storage.push_back(row);
+
+	}
+
+	//cout << "WE DID THE STORE" << endl;
+	return storage;
 }
 void displayList(vector<vector<string>> _randomList)
 {

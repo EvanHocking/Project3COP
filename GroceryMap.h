@@ -12,5 +12,6 @@ private:
 public:
     void addEdge(int aisle, string name, string category, string brand);
     void organizeList();
+    void clear();
 };
 
