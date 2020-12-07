@@ -6,7 +6,12 @@
 	Katrina Beaucage
 
 ===DESCRIPTION===
-TODO: make a description of the program
+Simulates a grocery list and then organizes them into aisles according to
+arbritrary catagorization. This is a simulated approach to the problem, given
+that we could not get access to a grocery store database. Download the database
+CSV file here
+
+Database: https://drive.google.com/file/d/1l-DkWtg8r0ISoMBtF0Yt33K6ZwLzqk_E/view?usp=sharing
 */
 
 #include <iostream>
